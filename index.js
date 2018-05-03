@@ -14,6 +14,6 @@ app.get('/', (req,res) => {
 // use port 3000 unless there exists a preconfigured port
 var port = process.env.PORT || 3000;
 
-app.listen(port, "0.0.0.0", () => {
+app.listen(port,  () => {
   console.log('Webhook server is listening on port ' + port);
 })
