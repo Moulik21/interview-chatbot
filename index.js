@@ -17,7 +17,7 @@ app.listen(port,  () => {
 });
 
 const verificationController = require('./controllers/verification');
-//const messageController = require('./controllers/messageWebhook');
+const messageController = require('./controllers/messageWebhook');
 
 app.get('/', verificationController);
-//app.post('/', messageController);
+app.post('/', messageController);
