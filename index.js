@@ -9,14 +9,15 @@ app.use(bodyParser.json()); // support json encoded bodies
 app.use(bodyParser.urlencoded({ extended: true })); // support encoded bodies
 app.set('port', (process.env.PORT || 3000));
 
-// app.get('/', (req,res) => {
-//   res.status(200).send("Hello world!");
-//
-// });
-
 // use port 3000 unless there exists a preconfigured port
 var port = process.env.PORT || 3000;
 
 app.listen(port,  () => {
   console.log('Webhook server is listening on port ' + port);
-})
+});
+
+const verificationController = require('./controllers/verification');
+const messageController = require('./controllers/messageWebhook');
+
+app.get('/', verificationController);
+app.post('/', messageController);
