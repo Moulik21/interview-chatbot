@@ -46,7 +46,7 @@ module.exports = (event) => {
   apiaiSession.on('response', (response) => {
 
     console.log(JSON.stringify(response));
-    var payload = {};
+    payload = {};
 
     const result = response.result.fulfillment.speech;
     console.log(result);
@@ -89,6 +89,7 @@ module.exports = (event) => {
         }//end switch
 
         sendMessage(senderId, payload);
+        payload = {};
       }//end for
     }
 
