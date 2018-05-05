@@ -22,7 +22,7 @@ const apiAiClient = require('apiai')(API_AI_TOKEN);
 const FB_ACCESS_TOKEN = process.env.PAGE_ACCESS_TOKEN;
 const request = require('request');
 
-const sendMessage = (senderId, text) => {
+const sendMessage = (senderId, payload) => {
   request({
     url: 'https://graph.facebook.com/v2.6/me/messages',
     qs: { access_token: FB_ACCESS_TOKEN },
@@ -30,7 +30,7 @@ const sendMessage = (senderId, text) => {
     json: {
       messaging_type: "RESPONSE",
       recipient: { id: senderId },
-      message: { text },
+      message: { payload },
     }
   });
 };
@@ -43,10 +43,12 @@ module.exports = (event) => {
   const apiaiSession = apiAiClient.textRequest(message, {sessionId: 'interview_bot' });
 
   apiaiSession.on('response', (response) => {
-    	console.log(JSON.stringify(response));
+
+    console.log(JSON.stringify(response));
+    const payload = {};
 
     const result = response.result.fulfillment.speech;
-
+    console.log(result);
     sendMessage(senderId, result);
   });
 
