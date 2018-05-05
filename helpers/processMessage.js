@@ -23,7 +23,7 @@ const FB_ACCESS_TOKEN = process.env.PAGE_ACCESS_TOKEN;
 const request = require('request');
 
 const sendMessage = (senderId, payload) => {
-  console.log("logging payload: "  + JSON.stringify(payload));
+
   request({
     url: 'https://graph.facebook.com/v2.6/me/messages',
     qs: { access_token: FB_ACCESS_TOKEN },
@@ -84,6 +84,7 @@ module.exports = (event) => {
           };
           break;
         }//end switch
+        console.log("logging payload: "  + JSON.stringify(payload));
         sendMessage(senderId, payload);
       }//end for
     }
