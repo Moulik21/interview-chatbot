@@ -65,20 +65,35 @@ module.exports = (event) => {
 
       for(message of messages){
         console.log(JSON.stringify(message));
-        // switch(message.type){
-        //   case 0: // plain text
-        //   console.log(message.type);
-        //   break;
-        //   case 3: //image
-        //   console.log(message.type);
-        //   break;
-        //   case 4: //file
-        //   console.log(message.type);
-        //   break;
-        // }//end switch
+        switch(message.type){
+          case 0: // plain text
+          payload.text = message.speech;
+          console.log("logging payload.text: "  + payload.text);
+          break;
+          case 3: //image
+          payload.attachment = {
+            type: "image",
+            payload: {
+              url: "" + message.imageUrl,
+              is_reusable: true
+            }
+          };
+          console.log("logging payload.attachment.payload.url: "  + payload.attachment.payload.url);
+          break;
+          case 4: //file
+          payloadattachment = {
+            type: "file",
+            payload: {
+              url: "" + message.fileUrl,
+              is_reusable: true
+            }
+          };
+          console.log("logging payload.attachment.payload.url: "  + payload.attachment.payload.url);
+          break;
+        }//end switch
 
         //sendMessage(senderId, payload);
-        //console.log("logging payload after POSTing: " + JSON.stringify(payload));
+        console.log("logging payload after POSTing: " + JSON.stringify(payload));
         //payload = {};
       }//end for
     }
