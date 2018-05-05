@@ -64,34 +64,19 @@ module.exports = (event) => {
       for(message in messages){
         switch(message.type){
           case 0: // plain text
-          payload["text"] = message.speech;
-          console.log("logging payload.text: "  + payload.text);
+          console.log(message.type);
           break;
           case 3: //image
-          payload["attachment"] = {
-            "type": "image",
-            "payload": {
-              "url": "" + message.imageUrl,
-              "is_reusable": true
-            }
-          };
-          console.log("logging payload.attachment.payload.url: "  + payload.attachment.payload.url);
+          console.log(message.type);
           break;
           case 4: //file
-          payload["attachment"] = {
-            "type": "file",
-            "payload": {
-              "url": "" + message.fileUrl,
-              "is_reusable": true
-            }
-          };
-          console.log("logging payload.attachment.payload.url: "  + payload.attachment.payload.url);
+          console.log(message.type);
           break;
         }//end switch
 
-        sendMessage(senderId, payload);
-        console.log("logging payload after POSTing: " + JSON.stringify(payload));
-        payload = {};
+        //sendMessage(senderId, payload);
+        //console.log("logging payload after POSTing: " + JSON.stringify(payload));
+        //payload = {};
       }//end for
     }
 
@@ -101,3 +86,30 @@ module.exports = (event) => {
 
   apiaiSession.end();
 };
+
+/*
+case 0: // plain text
+payload["text"] = message.speech;
+console.log("logging payload.text: "  + payload.text);
+break;
+case 3: //image
+payload["attachment"] = {
+  "type": "image",
+  "payload": {
+    "url": "" + message.imageUrl,
+    "is_reusable": true
+  }
+};
+console.log("logging payload.attachment.payload.url: "  + payload.attachment.payload.url);
+break;
+case 4: //file
+payload["attachment"] = {
+  "type": "file",
+  "payload": {
+    "url": "" + message.fileUrl,
+    "is_reusable": true
+  }
+};
+console.log("logging payload.attachment.payload.url: "  + payload.attachment.payload.url);
+break;
+*/
