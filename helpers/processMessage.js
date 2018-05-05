@@ -63,25 +63,25 @@ module.exports = (event) => {
       for(message in messages){
         switch(message.type){
           case 0: // plain text
-          payload.text = message.speech;
+          payload["text"] = message.speech;
           console.log("logging payload.text: "  + payload.text);
           break;
           case 3: //image
-          payload.attachment = {
-            type: "image",
-            payload: {
-              url: "" + message.imageUrl,
-              is_reusable: true
+          payload["attachment"] = {
+            "type": "image",
+            "payload": {
+              "url": "" + message.imageUrl,
+              "is_reusable": true
             }
           };
           console.log("logging payload.attachment.payload.url: "  + payload.attachment.payload.url);
           break;
           case 4: //file
-          payload.attachment = {
-            type: "file",
-            payload: {
-              url: "" + message.fileUrl,
-              is_reusable: true
+          payload["attachment"] = {
+            "type": "file",
+            "payload": {
+              "url": "" + message.fileUrl,
+              "is_reusable": true
             }
           };
           console.log("logging payload.attachment.payload.url: "  + payload.attachment.payload.url);
