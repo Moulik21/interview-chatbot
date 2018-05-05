@@ -92,7 +92,7 @@ module.exports = (event) => {
           break;
         }//end switch
 
-        setTimeout(sendMessage(senderId, payload), 1000);
+        setTimeout((){ sendMessage(senderId, payload) }, 1000);
         console.log("logging payload after POSTing: " + JSON.stringify(payload));
         payload = {};
 
