@@ -92,9 +92,9 @@ module.exports = (event) => {
           break;
         }//end switch
 
-        //sendMessage(senderId, payload);
+        sendMessage(senderId, payload);
         console.log("logging payload after POSTing: " + JSON.stringify(payload));
-        //payload = {};
+        payload = {};
       }//end for
     }
 
