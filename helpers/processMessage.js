@@ -64,8 +64,8 @@ module.exports = (event) => {
         switch(message.type){
           case 0: // plain text
           payload.text = message.speech;
-          break;
           console.log("logging payload: "  + JSON.stringify(payload));
+          break;          
           case 3: //image
           payload.attachment = {
             type: "image",
