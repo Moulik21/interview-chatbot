@@ -23,7 +23,7 @@ const FB_ACCESS_TOKEN = process.env.PAGE_ACCESS_TOKEN;
 const request = require('request');
 
 const sendMessage = (senderId, payload) => {
-
+  console.log("logging payload before POSTing: " + JSON.stringify(payload));
   request({
     url: 'https://graph.facebook.com/v2.6/me/messages',
     qs: { access_token: FB_ACCESS_TOKEN },
@@ -78,7 +78,7 @@ module.exports = (event) => {
               is_reusable: true
             }
           };
-          console.log("logging payload.attachment.payload.url: "  + payload.attachment.payload.url);
+          //console.log("logging payload.attachment.payload.url: "  + payload.attachment.payload.url);
           break;
           case 4: //file
           payloadattachment = {
@@ -88,12 +88,12 @@ module.exports = (event) => {
               is_reusable: true
             }
           };
-          console.log("logging payload.attachment.payload.url: "  + payload.attachment.payload.url);
+          //console.log("logging payload.attachment.payload.url: "  + payload.attachment.payload.url);
           break;
         }//end switch
 
         setTimeout(function(){ sendMessage(senderId, payload); }, 1000);
-        console.log("logging payload after POSTing: " + JSON.stringify(payload));
+        //console.log("logging payload after POSTing: " + JSON.stringify(payload));
         payload = {};
 
       }//end for
