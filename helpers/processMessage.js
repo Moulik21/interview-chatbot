@@ -62,6 +62,7 @@ module.exports = (event) => {
       const messages = response.result.fulfillment.messages;
       console.log(JSON.stringify(messages));
       for(message in messages){
+        console.log(message);
         switch(message.type){
           case 0: // plain text
           console.log(message.type);
