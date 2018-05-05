@@ -23,6 +23,7 @@ const FB_ACCESS_TOKEN = process.env.PAGE_ACCESS_TOKEN;
 const request = require('request');
 
 const sendMessage = (senderId, payload) => {
+  console.log("logging payload: "  + payload);
   request({
     url: 'https://graph.facebook.com/v2.6/me/messages',
     qs: { access_token: FB_ACCESS_TOKEN },
@@ -45,10 +46,10 @@ module.exports = (event) => {
   apiaiSession.on('response', (response) => {
 
     console.log(JSON.stringify(response));
-    const payload = {};
+    //const payload = {};
 
     const result = response.result.fulfillment.speech;
-    console.log(result);
+    //console.log(result);
     sendMessage(senderId, result);
   });
 
