@@ -39,7 +39,7 @@ const sendMessage = (senderId, payload) => {
   });
 };
 
-module.exports = (event) => {
+module.exports = async (event) => {
   console.log(JSON.stringify(event));
   const senderId = event.sender.id;
   const senderMessage = event.message.text;
