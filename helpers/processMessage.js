@@ -67,19 +67,19 @@ module.exports = (event) => {
           break;
           case 3: //image
           payload.attachment = {
-            "type": "image",
-            "payload": {
-              "url": "" + message.imageUrl,
-              "is_reusable": true
+            type: "image",
+            payload: {
+              url: "" + message.imageUrl,
+              is_reusable: true
             }
           };
           break;
           case 4: //file
           payload.attachment = {
-            "type": "file",
-            "payload": {
-              "url": "" + message.fileUrl,
-              "is_reusable": true
+            type: "file",
+            payload: {
+              url: "" + message.fileUrl,
+              is_reusable: true
             }
           };
           break;
