@@ -62,18 +62,18 @@ module.exports = (event) => {
       const messages = response.result.fulfillment.messages;
       console.log(JSON.stringify(messages));
       for(message in messages){
-        console.log(message);
-        switch(message.type){
-          case 0: // plain text
-          console.log(message.type);
-          break;
-          case 3: //image
-          console.log(message.type);
-          break;
-          case 4: //file
-          console.log(message.type);
-          break;
-        }//end switch
+        console.log(JSON.stringify(message));
+        // switch(message.type){
+        //   case 0: // plain text
+        //   console.log(message.type);
+        //   break;
+        //   case 3: //image
+        //   console.log(message.type);
+        //   break;
+        //   case 4: //file
+        //   console.log(message.type);
+        //   break;
+        // }//end switch
 
         //sendMessage(senderId, payload);
         //console.log("logging payload after POSTing: " + JSON.stringify(payload));
