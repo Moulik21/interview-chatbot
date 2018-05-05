@@ -64,8 +64,8 @@ module.exports = (event) => {
         switch(message.type){
           case 0: // plain text
           payload.text = message.speech;
-          console.log("logging payload: "  + JSON.stringify(payload));
-          break;          
+          console.log("logging payload.text: "  + payload.text);
+          break;
           case 3: //image
           payload.attachment = {
             type: "image",
@@ -74,7 +74,7 @@ module.exports = (event) => {
               is_reusable: true
             }
           };
-          console.log("logging payload: "  + JSON.stringify(payload));
+          console.log("logging payload.attachment.payload.url: "  + payload.attachment.payload.url);
           break;
           case 4: //file
           payload.attachment = {
@@ -84,7 +84,7 @@ module.exports = (event) => {
               is_reusable: true
             }
           };
-          console.log("logging payload: "  + JSON.stringify(payload));
+          console.log("logging payload.attachment.payload.url: "  + payload.attachment.payload.url);
           break;
         }//end switch
 
