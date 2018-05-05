@@ -23,16 +23,19 @@ const FB_ACCESS_TOKEN = process.env.PAGE_ACCESS_TOKEN;
 const request = require('request');
 
 const sendMessage = (senderId, payload) => {
-  console.log("logging payload before POSTing: " + JSON.stringify(payload));
-  request({
-    url: 'https://graph.facebook.com/v2.6/me/messages',
-    qs: { access_token: FB_ACCESS_TOKEN },
-    method: 'POST',
-    json: {
-      messaging_type: "RESPONSE",
-      recipient: { id: senderId },
-      message: payload ,
-    }
+  return new Promise( (resolve, reject) => {
+    console.log("logging payload before POSTing: " + JSON.stringify(payload));
+    request({
+      url: 'https://graph.facebook.com/v2.6/me/messages',
+      qs: { access_token: FB_ACCESS_TOKEN },
+      method: 'POST',
+      json: {
+        messaging_type: "RESPONSE",
+        recipient: { id: senderId },
+        message: payload ,
+      }
+    });
+    resolve();
   });
 };
 
@@ -54,7 +57,7 @@ module.exports = (event) => {
     //if one part, plain text response
     if(result){
       payload.text = result;
-      sendMessage(senderId, payload);
+      await sendMessage(senderId, payload);
       payload = {};
     }
     // if multiple part, text + file/image response
@@ -92,11 +95,11 @@ module.exports = (event) => {
           break;
         }//end switch
 
-        setTimeout(function() {
-            var payLoadCpy = payload;
-            sendMessage(senderId, payLoadCpy);
-         }, 1000);
-        //sendMessage(senderId, payload);
+        // setTimeout(function() {
+        //     var payLoadCpy = payload;
+        //     sendMessage(senderId, payLoadCpy);
+        //  }, 1000);
+        await sendMessage(senderId, payload);
         //console.log("logging payload after POSTing: " + JSON.stringify(payload));
         payload = {};
 
