@@ -53,6 +53,9 @@ module.exports = (event) => {
 
     if(result){
       payload.text = result;
+    } else{
+      const messages = response.result.fulfillment.messages;
+      console.log(JSON.stringify(messages));
     }
     sendMessage(senderId, payload);
   });
