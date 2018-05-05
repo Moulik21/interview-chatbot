@@ -65,6 +65,7 @@ module.exports = (event) => {
           case 0: // plain text
           payload.text = message.speech;
           break;
+          console.log("logging payload: "  + JSON.stringify(payload));
           case 3: //image
           payload.attachment = {
             type: "image",
@@ -73,6 +74,7 @@ module.exports = (event) => {
               is_reusable: true
             }
           };
+          console.log("logging payload: "  + JSON.stringify(payload));
           break;
           case 4: //file
           payload.attachment = {
@@ -82,9 +84,10 @@ module.exports = (event) => {
               is_reusable: true
             }
           };
+          console.log("logging payload: "  + JSON.stringify(payload));
           break;
         }//end switch
-        console.log("logging payload: "  + JSON.stringify(payload));
+
         sendMessage(senderId, payload);
       }//end for
     }
