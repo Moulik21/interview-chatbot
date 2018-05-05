@@ -92,8 +92,11 @@ module.exports = (event) => {
           break;
         }//end switch
 
-        //setTimeout(function(){ sendMessage(senderId, payload); }, 1000);
-        sendMessage(senderId, payload);
+        setTimeout(function() {
+            var payLoadCpy = payload;
+            sendMessage(senderId, payLoadCpy);
+         }, 1000);
+        //sendMessage(senderId, payload);
         //console.log("logging payload after POSTing: " + JSON.stringify(payload));
         payload = {};
 
