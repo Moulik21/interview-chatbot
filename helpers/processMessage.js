@@ -46,7 +46,7 @@ module.exports = (event) => {
   apiaiSession.on('response', (response) => {
 
     console.log(JSON.stringify(response));
-    const payload = {};
+    var payload = {};
 
     const result = response.result.fulfillment.speech;
     console.log(result);
