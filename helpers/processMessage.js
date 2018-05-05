@@ -31,7 +31,7 @@ const sendMessage = (senderId, payload) => {
     json: {
       messaging_type: "RESPONSE",
       recipient: { id: senderId },
-      message: { payload },
+      message: payload ,
     }
   });
 };
