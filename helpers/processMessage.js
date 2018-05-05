@@ -39,9 +39,9 @@ const sendMessage = (senderId, payload) => {
 module.exports = (event) => {
   console.log(JSON.stringify(event));
   const senderId = event.sender.id;
-  const message = event.message.text;
+  const senderMessage = event.message.text;
 
-  const apiaiSession = apiAiClient.textRequest(message, {sessionId: 'interview_bot' });
+  const apiaiSession = apiAiClient.textRequest(senderMessage, {sessionId: 'interview_bot' });
 
   apiaiSession.on('response', (response) => {
 
@@ -51,13 +51,43 @@ module.exports = (event) => {
     const result = response.result.fulfillment.speech;
     console.log(result);
 
+    //if one part, plain text response
     if(result){
       payload.text = result;
-    } else{
+      sendMessage(senderId, payload);
+    }
+    // if multiple part, text + file/image response
+    else{
       const messages = response.result.fulfillment.messages;
       console.log(JSON.stringify(messages));
+      for(message in messages){
+        switch(message.type){
+          case 0: // plain text
+          payload.text = message.speech;
+          break;
+          case 3: //image
+          payload.attachment = {
+            "type": "image",
+            "payload": {
+              "url": "" + message.imageUrl,
+              "is_reusable": true
+            }
+          };
+          break;
+          case 4: //file
+          payload.attachment = {
+            "type": "file",
+            "payload": {
+              "url": "" + message.fileUrl,
+              "is_reusable": true
+            }
+          };
+          break;
+        }//end switch
+        sendMessage(senderId, payload);
+      }//end for
     }
-    sendMessage(senderId, payload);
+
   });
 
   apiaiSession.on('error', error => console.log(error));
