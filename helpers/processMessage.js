@@ -39,7 +39,7 @@ const sendMessage = (senderId, payload) => {
   });
 };
 
-module.exports = async (event) => {
+module.exports = (event) => {
   console.log(JSON.stringify(event));
   const senderId = event.sender.id;
   const senderMessage = event.message.text;
@@ -57,7 +57,7 @@ module.exports = async (event) => {
     //if one part, plain text response
     if(result){
       payload.text = result;
-      await sendMessage(senderId, payload);
+      sendMessage(senderId, payload);
       payload = {};
     }
     // if multiple part, text + file/image response
@@ -99,7 +99,7 @@ module.exports = async (event) => {
         //     var payLoadCpy = payload;
         //     sendMessage(senderId, payLoadCpy);
         //  }, 1000);
-        await sendMessage(senderId, payload);
+        sendMessage(senderId, payload);
         //console.log("logging payload after POSTing: " + JSON.stringify(payload));
         payload = {};
 
