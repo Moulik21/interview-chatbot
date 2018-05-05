@@ -55,6 +55,7 @@ module.exports = (event) => {
     if(result){
       payload.text = result;
       sendMessage(senderId, payload);
+      payload = {};
     }
     // if multiple part, text + file/image response
     else{
@@ -89,6 +90,7 @@ module.exports = (event) => {
         }//end switch
 
         sendMessage(senderId, payload);
+        console.log("logging payload after POSTing: " + JSON.stringify(payload));
         payload = {};
       }//end for
     }
