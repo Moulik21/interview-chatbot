@@ -1,21 +1,3 @@
-/*
-
-  "message": {
-    "attachment": {
-      "type": "file",
-      "payload": {
-        "url": "https://examples.dialogflow.com/RichMessagesFiles/LoremIpsum.pdf",
-        "is_reusable": true
-      }
-    }
-  }
-   OR
-
-   "message":{
-    "text":"hello, world!"
-  }
-
-*/
 const API_AI_TOKEN = process.env.API_AI_TOKEN;
 const apiAiClient = require('apiai')(API_AI_TOKEN);
 
@@ -24,7 +6,8 @@ const request = require('request');
 
 const sendMessage = (senderId, payload) => {
   return new Promise( (resolve, reject) => {
-    console.log("logging payload before POSTing: " + JSON.stringify(payload));
+
+    //request to send a response to the user
     request({
       url: 'https://graph.facebook.com/v2.6/me/messages',
       qs: { access_token: FB_ACCESS_TOKEN },
@@ -40,15 +23,17 @@ const sendMessage = (senderId, payload) => {
 };
 
 module.exports = (event) => {
-  console.log(JSON.stringify(event));
+
   const senderId = event.sender.id;
   const senderMessage = event.message.text;
 
+  // get a response form Dialogflow after it processes the user message
   const apiaiSession = apiAiClient.textRequest(senderMessage, {sessionId: 'interview_bot' });
 
+  //callback on the response from Dialogflow
   apiaiSession.on('response', (response) => {
 
-    console.log(JSON.stringify(response));
+    //needs to be formatted according to the FB API
     payload = {};
 
     const result = response.result.fulfillment.speech;
@@ -62,17 +47,19 @@ module.exports = (event) => {
     }
     // if multiple part, text + file/image response
     else{
-      const messages = response.result.fulfillment.messages;
+
+      const messages = response.result.fulfillment.messages; //array of JSONs
       console.log(JSON.stringify(messages));
-      messages.for
 
       for(message of messages){
         console.log(JSON.stringify(message));
+
         switch(message.type){
+
           case 0: // plain text
           payload.text = message.speech;
-          console.log("logging payload.text: "  + payload.text);
           break;
+
           case 3: //image
           payload.attachment = {
             type: "image",
@@ -81,26 +68,20 @@ module.exports = (event) => {
               is_reusable: true
             }
           };
-          //console.log("logging payload.attachment.payload.url: "  + payload.attachment.payload.url);
           break;
+
           case 4: //file
-          payloadattachment = {
+          payload.attachment = {
             type: "file",
             payload: {
-              url: "" + message.fileUrl,
-              is_reusable: true
+              attachment_id: "" + message.payload.attachment_id
             }
           };
-          //console.log("logging payload.attachment.payload.url: "  + payload.attachment.payload.url);
           break;
         }//end switch
 
-        // setTimeout(function() {
-        //     var payLoadCpy = payload;
-        //     sendMessage(senderId, payLoadCpy);
-        //  }, 1000);
         sendMessage(senderId, payload);
-        //console.log("logging payload after POSTing: " + JSON.stringify(payload));
+        
         payload = {};
 
       }//end for
@@ -112,30 +93,3 @@ module.exports = (event) => {
 
   apiaiSession.end();
 };
-
-/*
-case 0: // plain text
-payload["text"] = message.speech;
-console.log("logging payload.text: "  + payload.text);
-break;
-case 3: //image
-payload["attachment"] = {
-  "type": "image",
-  "payload": {
-    "url": "" + message.imageUrl,
-    "is_reusable": true
-  }
-};
-console.log("logging payload.attachment.payload.url: "  + payload.attachment.payload.url);
-break;
-case 4: //file
-payload["attachment"] = {
-  "type": "file",
-  "payload": {
-    "url": "" + message.fileUrl,
-    "is_reusable": true
-  }
-};
-console.log("logging payload.attachment.payload.url: "  + payload.attachment.payload.url);
-break;
-*/

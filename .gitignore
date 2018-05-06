@@ -57,3 +57,8 @@ typings/
 # dotenv environment variables file
 .env
 
+# nodemon env file
+nodemon.json
+
+# various requests to the FB API
+FB_API_requests.txt
